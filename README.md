@@ -1,7 +1,9 @@
 # play-pac4j-heroku
 
+Created Project on Github (play project, MIT license, play .gitignore)
 
-Created Projec on Github (play project, MIT license, play .gitignore)
+Create new project with "activator new"
 
-Create new project with activator
+Follow Instructions on https://github.com/pac4j/play-pac4j
+    * put 
 

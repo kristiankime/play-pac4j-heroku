@@ -1,7 +1,17 @@
-@(message: String)
+@(profile : org.pac4j.core.profile.CommonProfile, urlGoogle: String)
 
-@main("Welcome to Play") {
+@main("Main") {
+    <h1>index</h1>
 
-    @play20.welcome(message)
+    <a href="@controllers.routes.Application.protectedIndex()">ProtectedPage</a> <br />
+    <br />
 
+    <a href="logout">logout</a>
+    <br /> <br />
+
+    profile : @profile
+    <br /> <br />
+
+    <hr />
+    <a href="@urlGoogle">Authenticate with Google</a> <br />
 }
