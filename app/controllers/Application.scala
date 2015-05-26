@@ -4,8 +4,6 @@ import org.pac4j.core.profile.CommonProfile
 import org.pac4j.play.scala.ScalaController
 import play.api._
 import play.api.mvc._
-import play.libs.F
-import play.mvc.Result
 
 object Application extends ScalaController[CommonProfile] {
 
@@ -21,4 +19,5 @@ object Application extends ScalaController[CommonProfile] {
       Ok(views.html.protectedIndex(profile))
     }
   }
+
 }

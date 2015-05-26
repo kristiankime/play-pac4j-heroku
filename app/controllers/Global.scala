@@ -28,7 +28,6 @@ object Global extends GlobalSettings {
       case e: OAuthCredentialsException => views.html.error500.render("Authentication Error",e.getMessage())
       case e: CredentialsException => views.html.error500.render("Credential Exception",e.printStackTrace().toString)
       case e: HttpCommunicationException => views.html.error500.render("HttpCommunicationException",e.printStackTrace().toString)
-      //      case e: CommunicationException => views.html.error500.render("CommunicationException",e.printStackTrace().toString)
       case e: TechnicalException => views.html.error500.render("Technical Exception",e.printStackTrace().toString)
       case e: RequiresHttpAction => views.html.error500.render("RequiresHttpAction",e.printStackTrace().toString)
       case e: Exception => views.html.error500.render("Exception", e.getMessage())
@@ -44,6 +43,7 @@ object Global extends GlobalSettings {
     val googleClient = new Google2Client(key, secret)
 
     val clients = new Clients(baseUrl + "/callback", googleClient)
+    Config.setSessionTimeout(600);
     Config.setClients(clients)
   }
 
