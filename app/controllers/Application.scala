@@ -11,7 +11,7 @@ object Application extends ScalaController[CommonProfile] {
     val newSession = getOrCreateSessionId(request)
     val urlGoogle = getRedirectAction(request, newSession, "Google2Client", "/").getLocation()
     val profile = getUserProfile(request)
-    Ok(views.html.index(profile, urlGoogle))
+    Ok(views.html.index(profile, urlGoogle)).withSession(newSession)
   }
 
   def protectedIndex = RequiresAuthentication("Google2Client") { profile =>
@@ -19,5 +19,8 @@ object Application extends ScalaController[CommonProfile] {
       Ok(views.html.protectedIndex(profile))
     }
   }
+
+  val textOnIndex = "This should be on index"
+  val textOnProtected = "This should be on protected"
 
 }
