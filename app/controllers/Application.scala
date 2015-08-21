@@ -16,6 +16,8 @@ class Application extends Controller with Security[CommonProfile] {
 
   def protectedIndex = RequiresAuthentication("Google2Client") { profile =>
     Action { request =>
+      profile.getId
+      profile.getTypedId
       Ok(views.html.protectedIndex(profile))
     }
   }
