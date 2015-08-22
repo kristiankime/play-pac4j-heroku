@@ -4,6 +4,7 @@ import javax.inject.{Inject, Singleton}
 
 import org.pac4j.core.client.Clients
 import org.pac4j.core.context.BaseConfig
+import org.pac4j.core.profile.ProfileHelper
 import org.pac4j.oauth.client.Google2Client
 import org.pac4j.oauth.client.Google2Client.Google2Scope
 import org.pac4j.play.Config
@@ -25,6 +26,7 @@ class SecurityConfigGoogle @Inject()(configuration: Configuration) extends Secur
   val key: String = configuration.getString("pac4j.googleKey") match { case Some(url) => url; case None => throw new IllegalStateException("pac4j.googleKey was not set") }
   val secret: String = configuration.getString("pac4j.googleSecret") match { case Some(url) => url; case None => throw new IllegalStateException("pac4j.googleSecret was not set") }
   val googleClient = new Google2Client(key, secret)
+  ProfileHelper.setKeepRawData(true);
   googleClient.setScope(Google2Scope.EMAIL_AND_PROFILE)
 
   val clients = new Clients(baseUrl + "/callback", googleClient)
