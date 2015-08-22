@@ -26,8 +26,6 @@ class SecurityConfigGoogle @Inject()(configuration: Configuration) extends Secur
   val key: String = configuration.getString("pac4j.googleKey") match { case Some(url) => url; case None => throw new IllegalStateException("pac4j.googleKey was not set") }
   val secret: String = configuration.getString("pac4j.googleSecret") match { case Some(url) => url; case None => throw new IllegalStateException("pac4j.googleSecret was not set") }
   val googleClient = new Google2Client(key, secret)
-  ProfileHelper.setKeepRawData(true);
-  googleClient.setScope(Google2Scope.EMAIL_AND_PROFILE)
 
   val clients = new Clients(baseUrl + "/callback", googleClient)
 

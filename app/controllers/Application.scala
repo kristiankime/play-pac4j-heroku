@@ -15,8 +15,8 @@ class Application @Inject()(userDAO: UserDAO) extends Controller with Security[C
   def index = Action { request =>
     val newSession = getOrCreateSessionId(request)
     val urlGoogle = getRedirectAction(request, newSession, "Google2Client", "/").getLocation()
-    val profile = getUserProfile(request)
-    Ok(views.html.index(profile, urlGoogle)).withSession(newSession)
+    val profileOp = Option(getUserProfile(request))
+    Ok(views.html.index(profileOp, urlGoogle)).withSession(newSession)
   }
 
   def protectedIndex = RequiresAuthentication("Google2Client") { profile =>
@@ -31,5 +31,5 @@ class Application @Inject()(userDAO: UserDAO) extends Controller with Security[C
 
 object Application {
   val textOnIndex = "This should be on index"
-  val textOnProtected = "This should be on protect"
+  val textOnProtected = "This should be on protected"
 }
