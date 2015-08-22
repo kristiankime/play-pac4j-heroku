@@ -1,11 +1,16 @@
 package controllers
 
+import dao.UserDAO
 import org.pac4j.core.profile.CommonProfile
 import org.pac4j.play.scala.Security
 import play.api._
+import play.api.db.slick.DatabaseConfigProvider
 import play.api.mvc._
+import javax.inject.Inject
 
-class Application extends Controller with Security[CommonProfile] {
+import slick.driver.JdbcProfile
+
+class Application @Inject()(userDAO: UserDAO) extends Controller with Security[CommonProfile] {
 
   def index = Action { request =>
     val newSession = getOrCreateSessionId(request)
@@ -24,7 +29,7 @@ class Application extends Controller with Security[CommonProfile] {
 
 }
 
-object  Application {
+object Application {
   val textOnIndex = "This should be on index"
   val textOnProtected = "This should be on protect"
 }
