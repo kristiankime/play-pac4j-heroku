@@ -1,6 +1,7 @@
 package controllers
 
 import dao.UserDAO
+import models.User
 import org.pac4j.core.profile.CommonProfile
 import org.pac4j.play.scala.Security
 import play.api._
@@ -8,13 +9,13 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.mvc._
 import javax.inject.Inject
 
+import security.SecurityUser
 import slick.driver.JdbcProfile
 
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
-
-class Application @Inject()(userDAO: UserDAO) extends Controller with Security[CommonProfile] {
+class Application @Inject()(val userDAO: UserDAO) extends Controller with SecurityUser[CommonProfile] {
 
   def index = Action { request =>
     val newSession = getOrCreateSessionId(request)
@@ -23,10 +24,14 @@ class Application @Inject()(userDAO: UserDAO) extends Controller with Security[C
     Ok(views.html.index(profileOp, urlGoogle)).withSession(newSession)
   }
 
-  def protectedIndex = RequiresAuthentication("Google2Client") { profile =>
-      Action.async { request =>
-        userDAO.getOrCreate(profile).map(user => Ok(views.html.userIndex(user)))
-      }
+//  def protectedIndex = RequiresAuthentication("Google2Client") { profile =>
+//      Action.async { request =>
+//        userDAO.getOrCreate(profile).map(user => Ok(views.html.userIndex(user)))
+//      }
+//  }
+
+  def protectedIndex = RequiresAuthenticationUser("Google2Client") { user =>
+     Ok(views.html.userIndex(user))
   }
 
 }
