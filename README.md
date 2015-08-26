@@ -14,4 +14,4 @@ these include key/secrets which need to be obtained for authentication to work
 (5) Added slick via https://www.playframework.com/documentation/2.4.x/PlaySlick
 As above added a slick.conf which references environment variables
 
-(6) 
+(6) built a UserDAO Following the sample application https://github.com/playframework/play-slick/tree/master/samples/di 

@@ -10,6 +10,10 @@ import javax.inject.Inject
 
 import slick.driver.JdbcProfile
 
+import scala.concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
+
+
 class Application @Inject()(userDAO: UserDAO) extends Controller with Security[CommonProfile] {
 
   def index = Action { request =>
@@ -20,11 +24,9 @@ class Application @Inject()(userDAO: UserDAO) extends Controller with Security[C
   }
 
   def protectedIndex = RequiresAuthentication("Google2Client") { profile =>
-    Action { request =>
-      profile.getId
-      profile.getTypedId
-      Ok(views.html.protectedIndex(profile))
-    }
+      Action.async { request =>
+        userDAO.getOrCreate(profile).map(user => Ok(views.html.userIndex(user)))
+      }
   }
 
 }

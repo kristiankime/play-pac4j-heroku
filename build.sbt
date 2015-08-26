@@ -20,8 +20,13 @@ libraryDependencies ++= Seq(
   "com.h2database" % "h2" % "1.4.188"
 )
 
+libraryDependencies += evolutions
+
 concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
 javaOptions in Test += "-Dslick.dbs.default.connectionTimeout=30 seconds"
+
+// Allow Scheme Generation
+libraryDependencies += "com.typesafe.slick" %% "slick-codegen" % "3.0.0"
 
 // Pac4j Libs
 libraryDependencies ++= Seq(
